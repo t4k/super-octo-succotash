@@ -15,7 +15,7 @@ jobs:
     steps:
 
       # Checkout the repo
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
       # Create preview
       - name: Create output file
@@ -24,19 +24,19 @@ jobs:
 
       # Publish artifact
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: preview
           path: './output'
 
-  deploy-prod:
+  run:
     runs-on: 'ubuntu-latest'
     environment: 'run'
     needs: [preview]
     steps:
 
       # Checkout the repo
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
       # Create preview
       - name: Create output file
@@ -45,7 +45,7 @@ jobs:
 
       # Publish artifact
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: run
           path: './output'
