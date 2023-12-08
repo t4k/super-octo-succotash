@@ -19,7 +19,6 @@ jobs:
 
       # Create preview
       - name: Create output file
-        working-directory: 'output'
         run: echo ${{ inputs.identifier }} > preview.txt
 
       # Publish artifact
@@ -27,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: preview
-          path: './output'
+          path: './preview.txt'
 
   run:
     runs-on: 'ubuntu-latest'
@@ -40,7 +39,6 @@ jobs:
 
       # Create preview
       - name: Create output file
-        working-directory: 'output'
         run: echo ${{ inputs.identifier }} > run.txt
 
       # Publish artifact
@@ -48,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: run
-          path: './output'
+          path: './run.txt'
