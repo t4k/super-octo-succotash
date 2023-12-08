@@ -1,0 +1,51 @@
+name: Succotash
+
+on:
+  workflow_dispatch:
+    inputs:
+      identifier:
+        description: 'Identifier'
+        required: true
+        type: string
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    environment: 'validate'
+    steps:
+
+      # Checkout the repo
+      - uses: actions/checkout@master
+
+      # Create preview
+      - name: Create output file
+        working-directory: 'output'
+        run: echo ${{ inputs.identifier }} > preview.txt
+
+      # Publish artifact
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: preview
+          path: './output'
+
+  deploy-prod:
+    runs-on: 'ubuntu-latest'
+    environment: 'run'
+    needs: [preview]
+    steps:
+
+      # Checkout the repo
+      - uses: actions/checkout@master
+
+      # Create preview
+      - name: Create output file
+        working-directory: 'output'
+        run: echo ${{ inputs.identifier }} > run.txt
+
+      # Publish artifact
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: run
+          path: './output'
